@@ -21,6 +21,7 @@ pie(Titles, labels = Clubs , col=colours,main="Pie Chart of EPL champtions 1992-
 ```
 
 Key concepts:
+
 - Data organization using vectors and data frames
 - Basic bar plot visualization using `barplot()`
 - Pie chart representation with grayscale colors using `pie()`
@@ -60,6 +61,7 @@ print(chsqRes)
 ```
 
 Key insights:
+
 - Comprehensive comparison between different managers (e.g., Ferguson vs Rangnick)
 - Analysis of Wins, Draws, and Losses using contingency tables
 - Statistical significance testing using Chi-square test
@@ -101,6 +103,7 @@ print(NCPts.2021)
 ```
 
 Key concepts:
+
 - Linear regression modeling using `lm()`
 - Predictive analytics with `predict()`
 - Data visualization with scatter plots and best-fit lines
@@ -146,6 +149,7 @@ print(profit)
 ```
 
 Concepts covered:
+
 - Odds representation and manipulation
 - Implied probability calculation
 - Over-round calculation (bookmaker's margin)
@@ -177,6 +181,7 @@ print(cup.draw)
 ```
 
 Key features:
+
 - 16-team tournament simulation
 - Random assignment of home/away teams using `sample()`
 - Matrix manipulation for results storage
