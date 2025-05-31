@@ -23,6 +23,7 @@ print(goals_dat)
 ```
 
 Key concepts:
+
 - Vector creation using `c()`
 - Basic statistical functions (`mean()`, `median()`, `sd()`, `var()`)
 - Data frame creation with `cbind.data.frame()`
@@ -48,6 +49,7 @@ goals_dat[c(3,4,5),]  # Row selection
 ```
 
 Key concepts:
+
 - Data frame inspection functions
 - Column and row selection methods
 - Structure analysis
@@ -75,6 +77,7 @@ colnames(match_dat)[colnames(match_dat) == 'outcome2'] <- 'Result'
 ```
 
 Key concepts:
+
 - Conditional logic with `ifelse()`
 - For loops and if statements
 - Column renaming in data frames
@@ -98,6 +101,7 @@ des_results <- describeBy(dat[,c(2:7)])
 ```
 
 Key concepts:
+
 - Summary statistics
 - Using external packages (psych)
 - Reading CSV files
@@ -124,6 +128,7 @@ abline(lm(dat$Chelsea_points ~ dat$Chelsea_GA), lty=1)
 ```
 
 Key concepts:
+
 - Time series plotting
 - Box plots for comparison
 - Scatter plots with regression lines
@@ -144,6 +149,7 @@ cor.test(dat$Chelsea_GA, dat$Chelsea_points)
 ```
 
 Key concepts:
+
 - Paired t-tests for team comparison
 - Correlation analysis
 - Statistical inference
