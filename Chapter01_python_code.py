@@ -53,7 +53,7 @@ manager1 = mu_record[mu_record['Manager'] == man1].iloc[0, 1:].values
 manager2 = mu_record[mu_record['Manager'] == man2].iloc[0, 1:].values
 
 # Create a contingency table
-cont_tab = np.array([manager1, manager2])
+cont_tab = np.array([manager1, manager2], dtype=float)  # Convert to float type
 print("\nContingency Table:")
 print(pd.DataFrame(
     cont_tab,
