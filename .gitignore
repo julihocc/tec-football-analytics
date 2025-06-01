@@ -67,3 +67,5 @@ coverage.xml
 
 # VS Code settings
 .vscode/
+
+*.pdf
