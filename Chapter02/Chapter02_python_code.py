@@ -1,6 +1,12 @@
 # Chapter 2: Python code
 # Copyright: Clive Beggs 6th March 2023 (Python translation May 31, 2025)
+#
+# This script demonstrates basic data analysis and visualization techniques using Python.
+# It is organized into sections (cells) for interactive execution in VS Code or Jupyter-like environments.
+# Each section is documented with comments explaining its purpose and logic.
 
+# %%
+# Import required libraries for data manipulation, visualization, and statistics
 import pandas as pd
 import numpy as np
 from scipy import stats
@@ -8,12 +14,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 
-# Code for Example 2.1
-
-# In Python, we don't need to explicitly clear variables as each run starts fresh
-# but we can reset pandas if needed: pd.reset_option('all')
-
-# Create a range of numbers from 1 to 10
+# %%
+# Section 1: Basic Data Creation and Summary Statistics (Example 2.1)
+# Create match data and compute basic statistics for goals scored, conceded, and goal difference
 match_id = list(range(1, 11))
 print("Match IDs:", match_id)
 
@@ -57,10 +60,9 @@ goals_dat = pd.DataFrame({
 print("\nComplete dataset:")
 print(goals_dat)
 
-#####
-
-# Code for Example 2.2
-
+# %%
+# Section 2: DataFrame Operations and Access (Example 2.2)
+# Explore DataFrame structure, access columns and rows, and display summary info
 print("\nColumn names:")
 print(goals_dat.columns)
 
@@ -92,10 +94,9 @@ print(goals_dat[['GoalsFor', 'GoalsAgainst']])
 print("\nAccessing rows 3-5:")
 print(goals_dat.iloc[2:5])
 
-#####
-
-# Code for Example 2.3
-
+# %%
+# Section 3: Conditional Logic and Adding Columns (Example 2.3)
+# Use conditional logic to determine match outcomes and add results to the DataFrame
 # Method 1: Using numpy.where (equivalent to R's ifelse)
 outcome1 = np.where(goals_dat['GoalsFor'] > goals_dat['GoalsAgainst'], 
                    "Win", "Did not win")
@@ -126,10 +127,9 @@ win_results = match_dat[match_dat['Result'] == "Win"]
 print("\nMatches won:")
 print(win_results)
 
-#####
-
-# Code for Example 2.4
-
+# %%
+# Section 4: Descriptive Statistics (Example 2.4)
+# Generate summary and detailed statistics for the match data
 print("\nDataFrame summary:")
 print(match_dat.describe())
 
@@ -156,12 +156,10 @@ detailed_stats = describe_detailed(numeric_cols)
 print("\nDetailed statistics:")
 print(detailed_stats)
 
-#####
-
-# Code for Example 2.5
-
-# Read the comparison data
-data_path = Path("Arsenal_Chelsea_comparison.csv")  # Use relative path
+# %%
+# Section 5: Reading and Summarizing External Data (Example 2.5)
+# Read Arsenal-Chelsea comparison data and compute detailed statistics
+data_path = Path("data/Arsenal_Chelsea_comparison.csv")  # Use relative path to data folder
 dat = pd.read_csv(data_path)
 print("\nArsenal-Chelsea comparison data:")
 print(dat)
@@ -175,10 +173,9 @@ print(detailed_stats)
 # Export results if needed
 # detailed_stats.to_csv('descriptive_results.csv')
 
-#####
-
-# Code for Example 2.6
-
+# %%
+# Section 6: Visualization - Line Plots (Example 2.6)
+# Plot goals for and against for Arsenal and Chelsea across seasons
 seasons = list(range(2011, 2021))
 
 plt.figure(figsize=(10, 6))
@@ -195,11 +192,9 @@ plt.legend(bbox_to_anchor=(0.05, 1), loc='upper left', frameon=False)
 plt.tight_layout()
 plt.show()
 
-#####
-
-# Code for Example 2.7
-
-# Create box plot
+# %%
+# Section 7: Visualization - Box Plots (Example 2.7)
+# Create box plots to compare goals for and against for both teams
 plt.figure(figsize=(10, 6))
 goals_data = [dat['Arsenal_GF'], dat['Arsenal_GA'], 
               dat['Chelsea_GF'], dat['Chelsea_GA']]
@@ -213,10 +208,9 @@ plt.show()
 print("\nSummary statistics:")
 print(dat[['Arsenal_GF', 'Arsenal_GA', 'Chelsea_GF', 'Chelsea_GA']].describe())
 
-#####
-
-# Code for Example 2.8
-
+# %%
+# Section 8: Visualization - Scatter and Regression Plots (Example 2.8)
+# Scatter plots and regression lines for goals conceded vs points for both teams
 plt.figure(figsize=(10, 6))
 plt.scatter(dat['Chelsea_GA'], dat['Chelsea_points'], marker='o', 
            color='black', label='Chelsea goals conceded')
@@ -241,10 +235,9 @@ plt.legend(bbox_to_anchor=(0.05, 0.2), loc='lower left', frameon=False)
 plt.tight_layout()
 plt.show()
 
-#####
-
-# Code for Example 2.9
-
+# %%
+# Section 9: Statistical Tests - t-tests and Correlations (Example 2.9)
+# Perform paired t-tests and Pearson correlation tests for goals and points
 # Paired t-tests
 gf_ttest = stats.ttest_rel(dat['Arsenal_GF'], dat['Chelsea_GF'])
 ga_ttest = stats.ttest_rel(dat['Arsenal_GA'], dat['Chelsea_GA'])
@@ -271,11 +264,9 @@ print("\nChelsea GA vs Points:")
 print(f"correlation: {chelsea_corr[0]:.4f}")
 print(f"p-value: {chelsea_corr[1]:.4f}")
 
-#####
-
-# Code for Example 2.10
-
-# Building linear regression models
+# %%
+# Section 10: Regression Modeling and Prediction (Example 2.10)
+# Build linear regression models for Arsenal and Chelsea, make predictions, and plot results
 from sklearn.linear_model import LinearRegression
 
 # Arsenal model
@@ -339,5 +330,3 @@ ax2.set_title('Chelsea: Predicted vs Observed Points')
 
 plt.tight_layout()
 plt.show()
-
-#####
