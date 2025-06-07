@@ -51,12 +51,14 @@ print(f"Standard deviation: {np.std(goal_diff, ddof=1):.3f}")
 print(f"Variance: {np.var(goal_diff, ddof=1):.3f}")
 
 # Compile DataFrame
-goals_dat = pd.DataFrame({
-    'MatchID': match_id,
-    'GoalsFor': goals_for,
-    'GoalsAgainst': goals_against,
-    'GoalDiff': goal_diff
-})
+goals_dat = pd.DataFrame(
+    {
+        "MatchID": match_id,
+        "GoalsFor": goals_for,
+        "GoalsAgainst": goals_against,
+        "GoalDiff": goal_diff,
+    }
+)
 print("\nComplete dataset:")
 print(goals_dat)
 
@@ -85,11 +87,11 @@ print(goals_dat.info())
 
 # Different ways to access data
 print("\nAccessing GoalsFor column:")
-print(goals_dat['GoalsFor'])  # Method 1: Using column name
-print(goals_dat.iloc[:, 1])   # Method 2: Using integer location
+print(goals_dat["GoalsFor"])  # Method 1: Using column name
+print(goals_dat.iloc[:, 1])  # Method 2: Using integer location
 
 print("\nAccessing GoalsFor and GoalsAgainst columns:")
-print(goals_dat[['GoalsFor', 'GoalsAgainst']])
+print(goals_dat[["GoalsFor", "GoalsAgainst"]])
 
 print("\nAccessing rows 3-5:")
 print(goals_dat.iloc[2:5])
@@ -98,19 +100,22 @@ print(goals_dat.iloc[2:5])
 # Section 3: Conditional Logic and Adding Columns (Example 2.3)
 # Use conditional logic to determine match outcomes and add results to the DataFrame
 # Method 1: Using numpy.where (equivalent to R's ifelse)
-outcome1 = np.where(goals_dat['GoalsFor'] > goals_dat['GoalsAgainst'], 
-                   "Win", "Did not win")
+outcome1 = np.where(
+    goals_dat["GoalsFor"] > goals_dat["GoalsAgainst"], "Win", "Did not win"
+)
 print("\nOutcome method 1:")
 print(outcome1)
 
+
 # Method 2: Using list comprehension (equivalent to R's for loop)
 def get_result(row):
-    if row['GoalsFor'] > row['GoalsAgainst']:
+    if row["GoalsFor"] > row["GoalsAgainst"]:
         return "Win"
-    elif row['GoalsFor'] < row['GoalsAgainst']:
+    elif row["GoalsFor"] < row["GoalsAgainst"]:
         return "Lose"
     else:
         return "Draw"
+
 
 outcome2 = [get_result(row) for _, row in goals_dat.iterrows()]
 print("\nOutcome method 2:")
@@ -118,12 +123,12 @@ print(outcome2)
 
 # Add results to DataFrame
 match_dat = goals_dat.copy()
-match_dat['Result'] = outcome2
+match_dat["Result"] = outcome2
 print("\nUpdated DataFrame with results:")
 print(match_dat)
 
 # Find all matches where the team won
-win_results = match_dat[match_dat['Result'] == "Win"]
+win_results = match_dat[match_dat["Result"] == "Win"]
 print("\nMatches won:")
 print(win_results)
 
@@ -133,22 +138,26 @@ print(win_results)
 print("\nDataFrame summary:")
 print(match_dat.describe())
 
+
 # More detailed statistics (similar to R's psych package)
 def describe_detailed(df):
-    stats_df = pd.DataFrame({
-        'n': df.count(),
-        'mean': df.mean(),
-        'sd': df.std(),
-        'median': df.median(),
-        'trimmed': df.apply(lambda x: stats.trim_mean(x, 0.1)),
-        'mad': df.apply(lambda x: stats.median_abs_deviation(x)),
-        'min': df.min(),
-        'max': df.max(),
-        'range': df.max() - df.min(),
-        'skew': df.skew(),
-        'kurtosis': df.kurtosis()
-    })
+    stats_df = pd.DataFrame(
+        {
+            "n": df.count(),
+            "mean": df.mean(),
+            "sd": df.std(),
+            "median": df.median(),
+            "trimmed": df.apply(lambda x: stats.trim_mean(x, 0.1)),
+            "mad": df.apply(lambda x: stats.median_abs_deviation(x)),
+            "min": df.min(),
+            "max": df.max(),
+            "range": df.max() - df.min(),
+            "skew": df.skew(),
+            "kurtosis": df.kurtosis(),
+        }
+    )
     return stats_df.round(3)
+
 
 # Calculate detailed statistics for numeric columns
 numeric_cols = match_dat.select_dtypes(include=[np.number])
@@ -159,9 +168,13 @@ print(detailed_stats)
 # %%
 # Section 5: Reading and Summarizing External Data (Example 2.5)
 # Read Arsenal-Chelsea comparison data and compute detailed statistics
-data_path = Path("../data/Arsenal_Chelsea_comparison.csv")  # Use correct relative path from Chapter02 folder
+data_path = Path(
+    "../data/Arsenal_Chelsea_comparison.csv"
+)  # Use correct relative path from Chapter02 folder
 if not data_path.exists():
-    data_path = Path("data/Arsenal_Chelsea_comparison.csv")  # fallback if running from project root
+    data_path = Path(
+        "data/Arsenal_Chelsea_comparison.csv"
+    )  # fallback if running from project root
 dat = pd.read_csv(data_path)
 print("\nArsenal-Chelsea comparison data:")
 print(dat)
@@ -181,22 +194,22 @@ print(detailed_stats)
 seasons = list(range(2011, 2021))
 
 # Ensure dat columns are numpy arrays for plotting
-arsenal_gf = np.array(dat['Arsenal_GF'])
-chelsea_gf = np.array(dat['Chelsea_GF'])
-arsenal_ga = np.array(dat['Arsenal_GA'])
-chelsea_ga = np.array(dat['Chelsea_GA'])
+arsenal_gf = np.array(dat["Arsenal_GF"])
+chelsea_gf = np.array(dat["Chelsea_GF"])
+arsenal_ga = np.array(dat["Arsenal_GA"])
+chelsea_ga = np.array(dat["Chelsea_GA"])
 
 plt.figure(figsize=(10, 6))
-plt.plot(seasons, arsenal_gf, 'ko-', label='Arsenal goals for')
-plt.plot(seasons, chelsea_gf, 'ko--', label='Chelsea goals for')
-plt.plot(seasons, arsenal_ga, 'k^-', label='Arsenal goals against')
-plt.plot(seasons, chelsea_ga, 'k^--', label='Chelsea goals against')
+plt.plot(seasons, arsenal_gf, "ko-", label="Arsenal goals for")
+plt.plot(seasons, chelsea_gf, "ko--", label="Chelsea goals for")
+plt.plot(seasons, arsenal_ga, "k^-", label="Arsenal goals against")
+plt.plot(seasons, chelsea_ga, "k^--", label="Chelsea goals against")
 
 plt.ylim(0, 140)
-plt.xlabel('Season')
-plt.ylabel('Goals')
-plt.title('Arsenal and Chelsea comparison')
-plt.legend(bbox_to_anchor=(0.05, 1), loc='upper left', frameon=False)
+plt.xlabel("Season")
+plt.ylabel("Goals")
+plt.title("Arsenal and Chelsea comparison")
+plt.legend(bbox_to_anchor=(0.05, 1), loc="upper left", frameon=False)
 plt.tight_layout()
 plt.show()
 
@@ -204,42 +217,53 @@ plt.show()
 # Section 7: Visualization - Box Plots (Example 2.7)
 # Create box plots to compare goals for and against for both teams
 plt.figure(figsize=(10, 6))
-goals_data = [dat['Arsenal_GF'], dat['Arsenal_GA'], 
-              dat['Chelsea_GF'], dat['Chelsea_GA']]
-plt.boxplot(goals_data, labels=['Arsenal GF', 'Arsenal GA', 
-                               'Chelsea GF', 'Chelsea GA'])
-plt.ylabel('Goals')
-plt.title('Goals Distribution Comparison')
+goals_data = [
+    dat["Arsenal_GF"],
+    dat["Arsenal_GA"],
+    dat["Chelsea_GF"],
+    dat["Chelsea_GA"],
+]
+plt.boxplot(goals_data, labels=["Arsenal GF", "Arsenal GA", "Chelsea GF", "Chelsea GA"])
+plt.ylabel("Goals")
+plt.title("Goals Distribution Comparison")
 plt.show()
 
 # Summary statistics
 print("\nSummary statistics:")
-print(dat[['Arsenal_GF', 'Arsenal_GA', 'Chelsea_GF', 'Chelsea_GA']].describe())
+print(dat[["Arsenal_GF", "Arsenal_GA", "Chelsea_GF", "Chelsea_GA"]].describe())
 
 # %%
 # Section 8: Visualization - Scatter and Regression Plots (Example 2.8)
 # Scatter plots and regression lines for goals conceded vs points for both teams
 plt.figure(figsize=(10, 6))
-plt.scatter(dat['Chelsea_GA'], dat['Chelsea_points'], marker='o', 
-           color='black', label='Chelsea goals conceded')
-plt.scatter(dat['Arsenal_GA'], dat['Arsenal_points'], marker='^', 
-           color='black', label='Arsenal goals conceded')
+plt.scatter(
+    dat["Chelsea_GA"],
+    dat["Chelsea_points"],
+    marker="o",
+    color="black",
+    label="Chelsea goals conceded",
+)
+plt.scatter(
+    dat["Arsenal_GA"],
+    dat["Arsenal_points"],
+    marker="^",
+    color="black",
+    label="Arsenal goals conceded",
+)
 
 # Regression lines
-arsenal_fit = np.polyfit(dat['Arsenal_GA'], dat['Arsenal_points'], 1)
-chelsea_fit = np.polyfit(dat['Chelsea_GA'], dat['Chelsea_points'], 1)
+arsenal_fit = np.polyfit(dat["Arsenal_GA"], dat["Arsenal_points"], 1)
+chelsea_fit = np.polyfit(dat["Chelsea_GA"], dat["Chelsea_points"], 1)
 
 x_range = np.array([0, 60])
-plt.plot(x_range, np.polyval(arsenal_fit, x_range), 'k--', 
-         label='Arsenal bestfit line')
-plt.plot(x_range, np.polyval(chelsea_fit, x_range), 'k-', 
-         label='Chelsea bestfit line')
+plt.plot(x_range, np.polyval(arsenal_fit, x_range), "k--", label="Arsenal bestfit line")
+plt.plot(x_range, np.polyval(chelsea_fit, x_range), "k-", label="Chelsea bestfit line")
 
 plt.xlim(0, 60)
 plt.ylim(0, 100)
-plt.xlabel('Goals conceded')
-plt.ylabel('Points')
-plt.legend(bbox_to_anchor=(0.05, 0.2), loc='lower left', frameon=False)
+plt.xlabel("Goals conceded")
+plt.ylabel("Points")
+plt.legend(bbox_to_anchor=(0.05, 0.2), loc="lower left", frameon=False)
 plt.tight_layout()
 plt.show()
 
@@ -247,8 +271,8 @@ plt.show()
 # Section 9: Statistical Tests - t-tests and Correlations (Example 2.9)
 # Perform paired t-tests and Pearson correlation tests for goals and points
 # Paired t-tests
-gf_ttest = stats.ttest_rel(dat['Arsenal_GF'], dat['Chelsea_GF'])
-ga_ttest = stats.ttest_rel(dat['Arsenal_GA'], dat['Chelsea_GA'])
+gf_ttest = stats.ttest_rel(dat["Arsenal_GF"], dat["Chelsea_GF"])
+ga_ttest = stats.ttest_rel(dat["Arsenal_GA"], dat["Chelsea_GA"])
 
 print("\nPaired t-test results:")
 print("Goals For - Arsenal vs Chelsea:")
@@ -260,8 +284,8 @@ print(f"t-statistic: {ga_ttest.statistic:.4f}")
 print(f"p-value: {ga_ttest.pvalue:.4f}")
 
 # Pearson correlation tests
-arsenal_corr = stats.pearsonr(dat['Arsenal_GA'], dat['Arsenal_points'])
-chelsea_corr = stats.pearsonr(dat['Chelsea_GA'], dat['Chelsea_points'])
+arsenal_corr = stats.pearsonr(dat["Arsenal_GA"], dat["Arsenal_points"])
+chelsea_corr = stats.pearsonr(dat["Chelsea_GA"], dat["Chelsea_points"])
 
 print("\nPearson correlation test results:")
 print("Arsenal GA vs Points:")
@@ -278,14 +302,14 @@ print(f"p-value: {chelsea_corr[1]:.4f}")
 from sklearn.linear_model import LinearRegression
 
 # Arsenal model
-X_arsenal = dat[['Arsenal_GA', 'Arsenal_GF']]
-y_arsenal = dat['Arsenal_points']
+X_arsenal = dat[["Arsenal_GA", "Arsenal_GF"]]
+y_arsenal = dat["Arsenal_points"]
 arsenal_model = LinearRegression()
 arsenal_model.fit(X_arsenal, y_arsenal)
 
 # Chelsea model
-X_chelsea = dat[['Chelsea_GA', 'Chelsea_GF']]
-y_chelsea = dat['Chelsea_points']
+X_chelsea = dat[["Chelsea_GA", "Chelsea_GF"]]
+y_chelsea = dat["Chelsea_points"]
 chelsea_model = LinearRegression()
 chelsea_model.fit(X_chelsea, y_chelsea)
 
@@ -310,8 +334,8 @@ chelsea_pred = chelsea_model.predict(X_chelsea)
 
 # Create DataFrame with predictions
 new_dat = dat.copy()
-new_dat['Arsenal_pred'] = np.round(arsenal_pred, 1)
-new_dat['Chelsea_pred'] = np.round(chelsea_pred, 1)
+new_dat["Arsenal_pred"] = np.round(arsenal_pred, 1)
+new_dat["Chelsea_pred"] = np.round(chelsea_pred, 1)
 print("\nData with predictions:")
 print(new_dat)
 
@@ -319,22 +343,28 @@ print(new_dat)
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 # Arsenal plot
-ax1.scatter(arsenal_pred, dat['Arsenal_points'], color='black', s=30)
-ax1.plot([dat['Arsenal_points'].min(), dat['Arsenal_points'].max()],
-         [dat['Arsenal_points'].min(), dat['Arsenal_points'].max()],
-         'k--', alpha=0.5)
-ax1.set_xlabel('Predicted points')
-ax1.set_ylabel('Observed points')
-ax1.set_title('Arsenal: Predicted vs Observed Points')
+ax1.scatter(arsenal_pred, dat["Arsenal_points"], color="black", s=30)
+ax1.plot(
+    [dat["Arsenal_points"].min(), dat["Arsenal_points"].max()],
+    [dat["Arsenal_points"].min(), dat["Arsenal_points"].max()],
+    "k--",
+    alpha=0.5,
+)
+ax1.set_xlabel("Predicted points")
+ax1.set_ylabel("Observed points")
+ax1.set_title("Arsenal: Predicted vs Observed Points")
 
 # Chelsea plot
-ax2.scatter(chelsea_pred, dat['Chelsea_points'], color='black', s=30)
-ax2.plot([dat['Chelsea_points'].min(), dat['Chelsea_points'].max()],
-         [dat['Chelsea_points'].min(), dat['Chelsea_points'].max()],
-         'k--', alpha=0.5)
-ax2.set_xlabel('Predicted points')
-ax2.set_ylabel('Observed points')
-ax2.set_title('Chelsea: Predicted vs Observed Points')
+ax2.scatter(chelsea_pred, dat["Chelsea_points"], color="black", s=30)
+ax2.plot(
+    [dat["Chelsea_points"].min(), dat["Chelsea_points"].max()],
+    [dat["Chelsea_points"].min(), dat["Chelsea_points"].max()],
+    "k--",
+    alpha=0.5,
+)
+ax2.set_xlabel("Predicted points")
+ax2.set_ylabel("Observed points")
+ax2.set_title("Chelsea: Predicted vs Observed Points")
 
 plt.tight_layout()
 plt.show()
