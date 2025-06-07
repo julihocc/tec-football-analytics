@@ -180,11 +180,17 @@ print(detailed_stats)
 # Plot goals for and against for Arsenal and Chelsea across seasons
 seasons = list(range(2011, 2021))
 
+# Ensure dat columns are numpy arrays for plotting
+arsenal_gf = np.array(dat['Arsenal_GF'])
+chelsea_gf = np.array(dat['Chelsea_GF'])
+arsenal_ga = np.array(dat['Arsenal_GA'])
+chelsea_ga = np.array(dat['Chelsea_GA'])
+
 plt.figure(figsize=(10, 6))
-plt.plot(seasons, dat['Arsenal_GF'], 'ko-', label='Arsenal goals for')
-plt.plot(seasons, dat['Chelsea_GF'], 'ko--', label='Chelsea goals for')
-plt.plot(seasons, dat['Arsenal_GA'], 'k^-', label='Arsenal goals against')
-plt.plot(seasons, dat['Chelsea_GA'], 'k^--', label='Chelsea goals against')
+plt.plot(seasons, arsenal_gf, 'ko-', label='Arsenal goals for')
+plt.plot(seasons, chelsea_gf, 'ko--', label='Chelsea goals for')
+plt.plot(seasons, arsenal_ga, 'k^-', label='Arsenal goals against')
+plt.plot(seasons, chelsea_ga, 'k^--', label='Chelsea goals against')
 
 plt.ylim(0, 140)
 plt.xlabel('Season')
