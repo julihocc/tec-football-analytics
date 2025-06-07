@@ -1,4 +1,3 @@
-
 # Chapter 2: R code
 # Copyright: Clive Beggs 6th March 2023
 
@@ -134,7 +133,9 @@ print(des_res)
 
 rm(list = ls())    # This clears all variables and data from the workspace.
 
-dat <- read.csv("C:/Datasets/Arsenal_Chelsea_comparison.csv")
+# Use the correct relative path for the CSV file in the data folder
+# dat <- read.csv("C:/Datasets/Arsenal_Chelsea_comparison.csv")
+dat <- read.csv("data/Arsenal_Chelsea_comparison.csv")
 print(dat)
 
 # Produce descriptive statistics
