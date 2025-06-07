@@ -1,13 +1,14 @@
 # Chapter 1: Python code
 # Copyright: Clive Beggs 6th March 2023 (Python translation May 31, 2025)
 
+# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import chi2_contingency
 
+# %%
 # Code snippet 1
-
 clubs = ["Arsenal", "Blackburn Rovers", "Chelsea", "Leicester City", "Liverpool", "Man City", "Man United"]
 titles = [3, 1, 5, 1, 1, 6, 13]
 epl_dat = pd.DataFrame({'Clubs': clubs, 'Titles': titles})
@@ -29,10 +30,8 @@ plt.pie(titles, labels=clubs, colors=colors)
 plt.title("Pie Chart of EPL champions 1992-2021")
 plt.show()
 
-#####
-
+# %%
 # Code snippet 2
-
 manager = ["Ferguson", "Moyes", "van Gaal", "Mourinho", "Solskjaer", "Rangnick"]
 wins = [895, 27, 54, 84, 91, 11]
 draws = [338, 9, 25, 32, 37, 10]
@@ -67,10 +66,8 @@ print("\nChi-square test results:")
 print(f"Chi-square statistic: {chi2:.4f}")
 print(f"p-value: {p_value:.4f}")
 
-#####
-
+# %%
 # Code snippet 3
-
 points = [61, 55, 41, 39, 67, 44, 59, 28, 59, 66, 69, 86, 74, 45, 23, 43, 62, 26, 65, 45]
 shots = [455, 518, 476, 383, 553, 346, 395, 440, 524, 472, 600, 590, 517, 387, 319, 417, 442, 336, 462, 462]
 
@@ -112,10 +109,8 @@ print(f"Chelsea (585 shots): {model.predict([[585]])[0]:.2f} points")
 print(f"Manchester City (704 shots): {model.predict([[704]])[0]:.2f} points")
 print(f"Norwich City (374 shots): {model.predict([[374]])[0]:.2f} points")
 
-#####
-
+# %%
 # Code snippet 4
-
 # William Hill match odds
 wh_hwodds = 2.15  # Odds offered by bookmaker for a home win
 wh_dodds = 3.30   # Odds offered by bookmaker for a draw
@@ -151,10 +146,8 @@ wager = 10  # £10 wager with WH on Tottenham to win
 profit = wager * (wh_hwodds - 1)
 print(f"\nProfit from £{wager} wager: £{profit:.2f}")
 
-#####
-
+# %%
 # Code snippet 5
-
 teams = list(range(1, 17))
 print("\nTeams:", teams)
 
