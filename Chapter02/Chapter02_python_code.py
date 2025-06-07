@@ -159,7 +159,9 @@ print(detailed_stats)
 # %%
 # Section 5: Reading and Summarizing External Data (Example 2.5)
 # Read Arsenal-Chelsea comparison data and compute detailed statistics
-data_path = Path("data/Arsenal_Chelsea_comparison.csv")  # Use relative path to data folder
+data_path = Path("../data/Arsenal_Chelsea_comparison.csv")  # Use correct relative path from Chapter02 folder
+if not data_path.exists():
+    data_path = Path("data/Arsenal_Chelsea_comparison.csv")  # fallback if running from project root
 dat = pd.read_csv(data_path)
 print("\nArsenal-Chelsea comparison data:")
 print(dat)
