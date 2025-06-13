@@ -2,8 +2,38 @@
 # Chapter 3: R code
 # Copyright: Clive Beggs 7th March 2023
 
-# Set working directory to ensure correct path resolution
-setwd("/home/julihocc/cbbeggs/main.worktrees/migrating-to-python/chapter03")
+# Ensure we're in the correct directory for relative paths to work
+# This approach makes the script portable and works from any directory
+current_dir <- getwd()
+
+# If not in chapter03, look for it relative to current directory
+if (basename(current_dir) != "chapter03") {
+  # Try various possible locations for chapter03
+  possible_dirs <- c(
+    "chapter03",                                    # ./chapter03
+    file.path("migrating-to-python", "chapter03"), # ./migrating-to-python/chapter03
+    file.path("..", "chapter03"),                   # ../chapter03
+    file.path(".", "chapter03")                     # ./chapter03 (redundant but safe)
+  )
+    for (dir in possible_dirs) {
+    if (dir.exists(dir) && file.exists(file.path(dir, "chapter03.R"))) {
+      setwd(dir)
+      # Only show message if we actually changed directories
+      if (basename(current_dir) != "chapter03") {
+        cat("Changed working directory to:", getwd(), "\n")
+      }
+      break
+    }
+  }
+}
+
+# Verify we can find the data file
+data_file <- "../data/Arsenal_home_2020.csv"
+if (!file.exists(data_file)) {
+  cat("Current working directory:", getwd(), "\n")
+  cat("Looking for data file at:", data_file, "\n")
+  stop("Data file not found. Please ensure the data directory exists relative to chapter03.")
+}
 
 # Code for Example 3.1
 
@@ -15,8 +45,8 @@ library(psych, lib.loc = "~/R/library")
 
 rm(list = ls())    # This clears all variables from workspace
 
-# Load data in form of CSV file
-ArsenalHome <- read.csv("/home/julihocc/cbbeggs/main.worktrees/migrating-to-python/data/Arsenal_home_2020.csv")
+# Load data in form of CSV file using relative path
+ArsenalHome <- read.csv("../data/Arsenal_home_2020.csv")
 print(ArsenalHome)
 
 # Inspect data
