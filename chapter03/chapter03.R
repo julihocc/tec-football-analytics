@@ -187,34 +187,34 @@ tail(download_data,10) # This displays the last 10 rows.
 rm(list=ls())
 
 # Call the worldfootballR package
-# library(worldfootballR, lib.loc = "~/R/library") # This calls up the library package.
-# match_urls <- fb_match_urls(country = "ENG",gender = "M",tier = "1st",season_end_year = c(2021))
+library(worldfootballR, lib.loc = "~/R/library") # This calls up the library package.
+match_urls <- fb_match_urls(country = "ENG",gender = "M",tier = "1st",season_end_year = c(2021))
 
 # Inspect match URLs
-# head(match_urls,10)
+head(match_urls,10)
 
 # Create match summary data frame
-# match_summary <- fb_match_summary(match_url = 
-#                 "https://fbref.com/en/matches/bf52349b/Fulham-Arsenal-September-12-2020-Premier-League") 
+match_summary <- fb_match_summary(match_url = 
+                "https://fbref.com/en/matches/bf52349b/Fulham-Arsenal-September-12-2020-Premier-League") 
 
 # Display match summary
-# print(match_summary[,c(19:25)]) # This displays the variables of interest (i.e. columns 19-25).
+print(match_summary[,c(19:25)]) # This displays the variables of interest (i.e. columns 19-25).
 
 #####
 
 # Code for Example 3.7
 
-# library(worldfootballR, lib.loc = "~/R/library")
+library(worldfootballR, lib.loc = "~/R/library")
 
 # Load data
-# EPL_2020_standard <- fb_season_team_stats(country = "ENG", gender = "M", 
-#                                           season_end_year = "2021", tier = "1st", stat_type = "standard")
+EPL_2020_standard <- fb_season_team_stats(country = "ENG", gender = "M", 
+                                          season_end_year = "2021", tier = "1st", stat_type = "standard")
 
 # Inspect data
-# names(EPL_2020_standard)
+names(EPL_2020_standard)
 
 # Display data
-# print(EPL_2020_standard[,c(4:9,14,15)])
+print(EPL_2020_standard[,c(4:9,14,15)])
 
 #write.csv(EPL_2020_standard, "C:/AnalysisResults/EPL_2020_standard.csv")  
 
@@ -222,15 +222,15 @@ rm(list=ls())
 
 # Code for Example 3.8
 
-# library(worldfootballR, lib.loc = "~/R/library")
-# Ronaldo_shooting <- fb_player_season_stats("https://fbref.com/en/players/dea698d9/Cristiano->Ronaldo", 
-#                                            stat_type = 'shooting')
+library(worldfootballR, lib.loc = "~/R/library")
+Ronaldo_shooting <- fb_player_season_stats("https://fbref.com/en/players/dea698d9/Cristiano-Ronaldo", 
+                                           stat_type = 'shooting')
 
 # Inspect data
-# names(Ronaldo_shooting)
+names(Ronaldo_shooting)
 
 # Selected variables from this data frame can be displayed using:
-# head(Ronaldo_shooting[,c(1,3:5,8,9,11)], 20) # This displays the top 20 rows in the data frame.
+head(Ronaldo_shooting[,c(1,3:5,8,9,11)], 20) # This displays the top 20 rows in the data frame.
 
 #####
 
