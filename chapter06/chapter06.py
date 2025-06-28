@@ -26,6 +26,7 @@ dat = mydata[
     ["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "PSH", "PSD", "PSA"]
 ]
 
+dat = dat.copy()
 # Rename column names
 dat.rename(
     columns={
@@ -195,7 +196,8 @@ def tau(x, y, lambda_, mu, rho):
     result[mask_10] = 1 + (mu[mask_10] * rho)
     result[mask_11] = 1 - rho
 
-    return result
+    # Clip values to avoid invalid probabilities
+    return np.clip(result, 1e-10, None)
 
 
 # Construct user-defined function for log-likelihood
@@ -254,6 +256,7 @@ print(dat.head())
 
 # Select variables for inclusion in random forest model
 rf_dat = dat[["Result", "HWodds", "Dodds", "AWodds"]]
+rf_dat = rf_dat.copy()
 rf_dat["Result"] = rf_dat["Result"].astype("category")
 
 # Split data into training and testing sets
