@@ -7,3 +7,4 @@ html5lib>=1.1
 matplotlib>=3.3.4
 seaborn>=0.11.1
 scipy>=1.7.0
+scikit-learn>=0.24.2
