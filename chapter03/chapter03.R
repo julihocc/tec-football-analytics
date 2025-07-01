@@ -2,12 +2,51 @@
 # Chapter 3: R code
 # Copyright: Clive Beggs 7th March 2023
 
+# Ensure we're in the correct directory for relative paths to work
+# This approach makes the script portable and works from any directory
+current_dir <- getwd()
+
+# If not in chapter03, look for it relative to current directory
+if (basename(current_dir) != "chapter03") {
+  # Try various possible locations for chapter03
+  possible_dirs <- c(
+    "chapter03",                                    # ./chapter03
+    file.path("migrating-to-python", "chapter03"), # ./migrating-to-python/chapter03
+    file.path("..", "chapter03"),                   # ../chapter03
+    file.path(".", "chapter03")                     # ./chapter03 (redundant but safe)
+  )
+    for (dir in possible_dirs) {
+    if (dir.exists(dir) && file.exists(file.path(dir, "chapter03.R"))) {
+      setwd(dir)
+      # Only show message if we actually changed directories
+      if (basename(current_dir) != "chapter03") {
+        cat("Changed working directory to:", getwd(), "\n")
+      }
+      break
+    }
+  }
+}
+
+# Verify we can find the data file
+data_file <- "../data/Arsenal_home_2020.csv"
+if (!file.exists(data_file)) {
+  cat("Current working directory:", getwd(), "\n")
+  cat("Looking for data file at:", data_file, "\n")
+  stop("Data file not found. Please ensure the data directory exists relative to chapter03.")
+}
+
 # Code for Example 3.1
+
+# Alternatively, use the 'describeBy' function in the "psych" package.
+# install.packages("psych")  # This installs the 'psych' package. 
+# NB. This command only needs to be executed once to install the package.
+# Thereafter, the 'psych' library can be called using the command.
+library(psych, lib.loc = "~/R/library")
 
 rm(list = ls())    # This clears all variables from workspace
 
-# Load data in form of CSV file
-ArsenalHome <- read.csv("C:/Datasets/Arsenal_home_2020.csv")
+# Load data in form of CSV file using relative path
+ArsenalHome <- read.csv("../data/Arsenal_home_2020.csv")
 print(ArsenalHome)
 
 # Inspect data
@@ -148,7 +187,7 @@ tail(download_data,10) # This displays the last 10 rows.
 rm(list=ls())
 
 # Call the worldfootballR package
-library(worldfootballR) # This calls up the library package.
+library(worldfootballR, lib.loc = "~/R/library") # This calls up the library package.
 match_urls <- fb_match_urls(country = "ENG",gender = "M",tier = "1st",season_end_year = c(2021))
 
 # Inspect match URLs
@@ -159,13 +198,13 @@ match_summary <- fb_match_summary(match_url =
                 "https://fbref.com/en/matches/bf52349b/Fulham-Arsenal-September-12-2020-Premier-League") 
 
 # Display match summary
-print(match_summary[,c(19:25)]) # This displays the variables of interest (i.e. columns 19-25). 
+print(match_summary[,c(19:25)]) # This displays the variables of interest (i.e. columns 19-25).
 
 #####
 
 # Code for Example 3.7
 
-library(worldfootballR)
+library(worldfootballR, lib.loc = "~/R/library")
 
 # Load data
 EPL_2020_standard <- fb_season_team_stats(country = "ENG", gender = "M", 
@@ -183,8 +222,8 @@ print(EPL_2020_standard[,c(4:9,14,15)])
 
 # Code for Example 3.8
 
-library(worldfootballR)
-Ronaldo_shooting <- fb_player_season_stats("https://fbref.com/en/players/dea698d9/Cristiano->Ronaldo", 
+library(worldfootballR, lib.loc = "~/R/library")
+Ronaldo_shooting <- fb_player_season_stats("https://fbref.com/en/players/dea698d9/Cristiano-Ronaldo", 
                                            stat_type = 'shooting')
 
 # Inspect data
@@ -200,7 +239,7 @@ head(Ronaldo_shooting[,c(1,3:5,8,9,11)], 20) # This displays the top 20 rows in 
 # install.packages("rvest")  # NB. This only needs to be run once to install the package.
 
 # Read html
-library(rvest)
+library(rvest, lib.loc = "~/R/library")
 tran_window <- read_html("https://en.wikipedia.org/wiki/Transfer_window")
 
 # Create CSS selector
