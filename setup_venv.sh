@@ -5,7 +5,7 @@
 
 set -e  # Exit on any error
 
-PROJECT_DIR="/home/julihocc/cbbeggs/main.worktrees/migrating-to-python"
+PROJECT_DIR="/home/julihocc/football/main.worktrees/migrating-to-python"
 VENV_DIR="$PROJECT_DIR/venv"
 
 echo "============================================================"
